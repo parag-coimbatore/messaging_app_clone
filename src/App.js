@@ -1,10 +1,9 @@
+import Messenger from "./components/Messenger";
 
 
 function App() {
   return (
-    <div className="App">
-      Hello
-    </div>
+    <Messenger/>
   );
 }
 

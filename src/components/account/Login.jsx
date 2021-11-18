@@ -1,4 +1,5 @@
 import { Dialog, withStyles, Box, Typography , makeStyles, List, ListItem} from "@material-ui/core";
+import { GoogleLogin } from 'react-google-login';
 
 const useStyles = makeStyles({
     component:{
@@ -41,6 +42,16 @@ const style = {
 const Login = ({ classes}) => {
     const classname = useStyles();
     const qrurl = 'https://www.ginifab.com/feeds/qr_code/img/qrcode.jpg';
+    const clientId = '1031040474957-348ebkl9n2iv441ic5pr22464cpal6nj.apps.googleusercontent.com';  /*we get this from console.cloud.google.com*/
+
+    const onLoginSucces = () => {
+        console.log('Login Success', res.profileObj);
+    }
+
+    const onLoginFailure = () => {
+        console.log('Login Failure');
+    }
+
 
     return(
         <Dialog  
@@ -59,9 +70,16 @@ const Login = ({ classes}) => {
                 </Box>
                 <Box>
                     <img src={qrurl} alt='qr' className={classname.qrCode}/>
+                    <GoogleLogin
+                        clientId={clientId}
+                        buttonText = ""
+                        isSignedIn={true}
+                        onSuccess={onLoginSucces}
+                        onFailure={onLoginFailure}
+                        cookiePolicy={'single_host_origin'}
+                    />
                 </Box>
             </Box>
-
 
         </Dialog>
     )

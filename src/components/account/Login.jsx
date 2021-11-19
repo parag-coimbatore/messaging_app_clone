@@ -1,5 +1,7 @@
 import { Dialog, withStyles, Box, Typography , makeStyles, List, ListItem} from "@material-ui/core";
+import { useContext } from "react";
 import { GoogleLogin } from 'react-google-login';
+import { AccountContext } from "../../contacts/AccountProvider";
 
 const useStyles = makeStyles({
     component:{
@@ -35,7 +37,8 @@ const style = {
         borderRadius: 19,
         border: '2px solid rgb(210, 210, 210)',
         maxHeight: '100%',
-        maxWidth: '100%'
+        maxWidth: '100%',
+        overflow : 'hidden'
     }
 }
 
@@ -44,8 +47,10 @@ const Login = ({ classes}) => {
     const qrurl = 'https://www.ginifab.com/feeds/qr_code/img/qrcode.jpg';
     const clientId = '1031040474957-348ebkl9n2iv441ic5pr22464cpal6nj.apps.googleusercontent.com';  /*we get this from console.cloud.google.com*/
 
-    const onLoginSucces = () => {
+    const {account,setAccount} = useContext(AccountContext);
+    const onLoginSucces = (res) => {
         console.log('Login Success', res.profileObj);
+        setAccount(res.profileObj);
     }
 
     const onLoginFailure = () => {
@@ -68,16 +73,19 @@ const Login = ({ classes}) => {
                         <ListItem className={classname.textNotice}>3. And enjoy chatting with your partner </ListItem>
                     </List>
                 </Box>
-                <Box>
+                <Box style={{position: 'relative'}}>
                     <img src={qrurl} alt='qr' className={classname.qrCode}/>
-                    <GoogleLogin
-                        clientId={clientId}
-                        buttonText = ""
-                        isSignedIn={true}
-                        onSuccess={onLoginSucces}
-                        onFailure={onLoginFailure}
-                        cookiePolicy={'single_host_origin'}
-                    />
+                    <Box style={{position: 'absolute', left: '65%', top: '40%'}}>
+                        <GoogleLogin
+                            clientId={clientId}
+                            buttonText = ""
+                            backgroundColor = "black"
+                            isSignedIn={true}
+                            onSuccess={onLoginSucces}
+                            onFailure={onLoginFailure}
+                            cookiePolicy={'single_host_origin'}
+                        />
+                    </Box>
                 </Box>
             </Box>
 

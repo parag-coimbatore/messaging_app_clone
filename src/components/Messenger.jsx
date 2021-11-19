@@ -1,5 +1,9 @@
 import { AppBar, Toolbar ,  makeStyles } from "@material-ui/core";
 import Login from "./account/Login";
+import { AccountContext } from "../contacts/AccountProvider";
+import React ,{ useContext } from "react";
+import ChatBox from "./ChatBox";
+
 
 const useStyles = makeStyles({
     loginHeader : {
@@ -13,6 +17,7 @@ const useStyles = makeStyles({
 
 const Messenger = () => {
     const classes = useStyles();
+    const {account} = useContext(AccountContext);
     return(
         <>
             <AppBar className={classes.loginHeader}>
@@ -20,7 +25,7 @@ const Messenger = () => {
 
                 </Toolbar>
             </AppBar>
-            <Login/>
+            { account ? <ChatBox/> : <Login/>} /* if user is logged in successfully open chatbox else open login page*/
 
         </>
     )

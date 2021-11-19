@@ -1,9 +1,14 @@
 import Messenger from "./components/Messenger";
+import AccountProvider from "./contacts/AccountProvider";
 
 
 function App() {
   return (
-    <Messenger/>
+    <>
+      <AccountProvider>
+        <Messenger/>
+      </AccountProvider>
+    </>
   );
 }
 
